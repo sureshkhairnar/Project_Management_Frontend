@@ -1,5 +1,5 @@
 import Login from "../../features/frontend/authentication/Login";
-import Register from "../../features/frontend/authentication/Register";
+// import Register from "../../features/frontend/authentication/Register";
 
 export default [
   {
@@ -10,12 +10,12 @@ export default [
     component: <Login />,
     authenticated: "no",
   },
-  {
-    label: "Register",
-    path: "register",
-    showInMenu: true,
-    addRoute: true,
-    component: <Register />,
-    authenticated: "no",
-  },
+  // {
+  //   label: "Register",
+  //   path: "register",
+  //   showInMenu: true,
+  //   addRoute: true,
+  //   component: <Register />,
+  //   authenticated: "no",
+  // },
 ];

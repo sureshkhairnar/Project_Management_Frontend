@@ -1,7 +1,6 @@
 import React from "react";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import Container from "@mui/material/Container";
 import {
   Button,
   TextField,
@@ -19,6 +18,9 @@ import { Formik, Field, Form } from "formik";
 import * as Yup from "yup";
 import Logo from "../../../assets/Logo.svg";
 import backIcon from "../../../assets/back arrow.svg";
+import { useNavigate } from "react-router-dom";
+import { addProject } from "../../../app/slices/AuthSlice";
+import { useDispatch } from "react-redux";
 
 // Yup validation schema
 const validationSchema = Yup.object({
@@ -49,6 +51,8 @@ const validationSchema = Yup.object({
 });
 
 const AddEditProject = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const handleSubmit = (values, { resetForm }) => {
     ProjectService.createProject(values)
       .then((response) => {
@@ -57,8 +61,12 @@ const AddEditProject = () => {
           icon: "success",
           title: "Success",
           text: response?.data?.message,
+          timer: 1500,
+          showCancelButton: false,
         });
         resetForm();
+        dispatch(addProject(response?.data?.data));
+        navigate("/secured/projects");
       })
       .catch((err) => {
         Swal.fire({
@@ -82,7 +90,8 @@ const AddEditProject = () => {
           <img
             src={backIcon}
             alt="back icon"
-            style={{ marginTop: "-5px", marginLeft: "10px" }}
+            style={{ marginTop: "-5px", marginLeft: "10px", cursor: "pointer" }}
+            onClick={() => navigate(-1)}
           />
           <Typography variant="h6" className="dashboard-title">
             Create Project
@@ -155,8 +164,8 @@ const AddEditProject = () => {
                       </Button>
                     </Grid>
                   </Grid>
-                  <Grid container spacing={2}>
-                    <Grid item xs={12} md={6} lg={4} sx={{ padding: "10px" }}>
+                  <Grid container spacing={3} maxWidth={"lg"}>
+                    <Grid item xs={12} md={6} lg={4}>
                       <FormControl
                         fullWidth
                         error={touched.reason && Boolean(errors.reason)}
@@ -183,7 +192,7 @@ const AddEditProject = () => {
                         </FormHelperText>
                       </FormControl>
                     </Grid>
-                    <Grid item xs={12} md={6} lg={4} sx={{ padding: "10px" }}>
+                    <Grid item xs={12} md={6} lg={4}>
                       <FormControl
                         fullWidth
                         error={touched.type && Boolean(errors.type)}
@@ -209,7 +218,7 @@ const AddEditProject = () => {
                         </FormHelperText>
                       </FormControl>
                     </Grid>
-                    <Grid item xs={12} md={6} lg={4} sx={{ padding: "10px" }}>
+                    <Grid item xs={12} md={6} lg={4}>
                       <FormControl
                         fullWidth
                         error={touched.division && Boolean(errors.division)}
@@ -235,7 +244,7 @@ const AddEditProject = () => {
                         </FormHelperText>
                       </FormControl>
                     </Grid>
-                    <Grid item xs={12} md={6} lg={4} sx={{ padding: "10px" }}>
+                    <Grid item xs={12} md={6} lg={4}>
                       <FormControl
                         fullWidth
                         error={touched.category && Boolean(errors.category)}
@@ -261,7 +270,7 @@ const AddEditProject = () => {
                         </FormHelperText>
                       </FormControl>
                     </Grid>
-                    <Grid item xs={12} md={6} lg={4} sx={{ padding: "10px" }}>
+                    <Grid item xs={12} md={6} lg={4}>
                       <FormControl
                         fullWidth
                         error={touched.priority && Boolean(errors.priority)}
@@ -287,7 +296,7 @@ const AddEditProject = () => {
                         </FormHelperText>
                       </FormControl>
                     </Grid>
-                    <Grid item xs={12} md={6} lg={4} sx={{ padding: "10px" }}>
+                    <Grid item xs={12} md={6} lg={4}>
                       <FormControl
                         fullWidth
                         error={touched.department && Boolean(errors.department)}
@@ -316,7 +325,7 @@ const AddEditProject = () => {
                         </FormHelperText>
                       </FormControl>
                     </Grid>
-                    <Grid item xs={12} md={6} lg={4} sx={{ padding: "10px" }}>
+                    <Grid item xs={12} md={6} lg={4}>
                       <Field
                         as={TextField}
                         fullWidth
@@ -333,7 +342,7 @@ const AddEditProject = () => {
                         }
                       />
                     </Grid>
-                    <Grid item xs={12} md={6} lg={4} sx={{ padding: "10px" }}>
+                    <Grid item xs={12} md={6} lg={4}>
                       <Field
                         as={TextField}
                         fullWidth
@@ -350,7 +359,7 @@ const AddEditProject = () => {
                         }
                       />
                     </Grid>
-                    <Grid item xs={12} md={6} lg={4} sx={{ padding: "10px" }}>
+                    <Grid item xs={12} md={6} lg={4}>
                       <FormControl
                         fullWidth
                         error={touched.location && Boolean(errors.location)}
@@ -378,7 +387,7 @@ const AddEditProject = () => {
                         </FormHelperText>
                       </FormControl>
                     </Grid>
-                    <Grid item xs={12} md={6} lg={4} sx={{ padding: "10px" }}>
+                    <Grid item xs={12} md={6} lg={4}>
                       <FormControl
                         fullWidth
                         error={touched.status && Boolean(errors.status)}
@@ -396,7 +405,7 @@ const AddEditProject = () => {
                           }
                         >
                           <MenuItem value="Registered">Registered</MenuItem>
-                          <MenuItem value="Close">Close</MenuItem>
+                          <MenuItem value="Closed">Closed</MenuItem>
                           <MenuItem value="Cancelled">Cancelled</MenuItem>
                           <MenuItem value="Running">Running</MenuItem>
                           <MenuItem value="Closure Delay">

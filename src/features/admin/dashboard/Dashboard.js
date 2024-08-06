@@ -40,10 +40,9 @@ const Dashboard = () => {
       }
     });
 
-    // Calculate percentages and format names
     Object.values(locationMap).forEach((dept) => {
-      const percentage = ((dept.Close / dept.Total) * 100).toFixed(2);
-      dept.name = `${dept.name} (${percentage}%)`;
+      const percentage = ((dept.Close / dept.Total) * 100).toFixed(0);
+      dept.name = `${dept.name} ${" "} ${percentage}%`;
     });
 
     return Object.values(locationMap);
@@ -86,126 +85,127 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <>
-      <Typography variant="h6" className="dashboard-title">
-        Dashboard
-      </Typography>
-      <Box sx={{ display: "flex", justifyContent: "center" }} mt={"-60px"}>
-        <img
-          src={Logo}
-          alt="techprime logo"
-          width={"60px"}
-          style={{ alignSelf: "center" }}
-        />
-      </Box>
+    <Box>
       <Box>
-        <Grid
-          container
-          mt={1}
-          spacing={2}
-          sx={{
-            flexDirection: { xs: "column", md: "row" },
-            alignItems: { xs: "flex-start", md: "flex-start" },
-            "@media (max-width:599px)": {
-              flexDirection: "column",
-            },
-          }}
-          flexWrap={"wrap"}
-          className="container"
-        >
+        <Typography variant="h6" className="dashboard-title">
+          Dashboard
+        </Typography>
+        <Box sx={{ display: "flex", justifyContent: "center" }} mt={"-60px"}>
+          <img
+            src={Logo}
+            alt="techprime logo"
+            width={"60px"}
+            style={{ alignSelf: "center" }}
+          />
+        </Box>
+        <Box>
           <Grid
-            item
-            xs={12}
-            md={2.4}
+            container
+            mt={1}
+            spacing={2}
             sx={{
+              flexDirection: { xs: "column", md: "row" },
+              alignItems: { xs: "flex-start", md: "flex-start" },
               "@media (max-width:599px)": {
-                minWidth: "100%",
+                flexDirection: "column",
               },
             }}
+            flexWrap={"wrap"}
           >
-            <Card className="card-common">
-              <Typography className="cardTitle">Total Projects</Typography>
-              <Typography className="card-text">
-                {projectStats.total}
-              </Typography>
-            </Card>
+            <Grid
+              item
+              xs={12}
+              md={2.4}
+              sx={{
+                "@media (max-width:599px)": {
+                  minWidth: "100%",
+                },
+              }}
+            >
+              <Card className="card-common">
+                <Typography className="cardTitle">Total Projects</Typography>
+                <Typography className="card-text">
+                  {projectStats.total}
+                </Typography>
+              </Card>
+            </Grid>
+            <Grid
+              item
+              xs={12}
+              md={2.4}
+              sx={{
+                "@media (max-width:599px)": {
+                  minWidth: "100%",
+                },
+              }}
+            >
+              <Card className="card-common">
+                <Typography className="cardTitle">Closed</Typography>
+                <Typography className="card-text">
+                  {projectStats.closed}
+                </Typography>
+              </Card>
+            </Grid>
+            <Grid
+              item
+              xs={12}
+              md={2.4}
+              sx={{
+                "@media (max-width:599px)": {
+                  minWidth: "100%",
+                },
+              }}
+            >
+              <Card className="card-common">
+                <Typography className="cardTitle">Running</Typography>
+                <Typography className="card-text">
+                  {projectStats.running}
+                </Typography>
+              </Card>
+            </Grid>
+            <Grid
+              item
+              xs={12}
+              md={2.4}
+              sx={{
+                "@media (max-width:599px)": {
+                  minWidth: "100%",
+                },
+              }}
+            >
+              <Card className="card-common">
+                <Typography className="cardTitle">Closure Delay</Typography>
+                <Typography className="card-text">
+                  {projectStats.delayed}
+                </Typography>
+              </Card>
+            </Grid>
+            <Grid
+              item
+              xs={12}
+              md={2.4}
+              sx={{
+                "@media (max-width:599px)": {
+                  minWidth: "100%",
+                },
+              }}
+            >
+              <Card className="card-common">
+                <Typography className="cardTitle">Cancelled</Typography>
+                <Typography className="card-text">
+                  {projectStats.cancelled}
+                </Typography>
+              </Card>
+            </Grid>
+            <Grid item xs={12} md={12}>
+              <Box>
+                <BarGraph data={barGraph} />
+              </Box>
+            </Grid>
           </Grid>
-          <Grid
-            item
-            xs={12}
-            md={2.4}
-            sx={{
-              "@media (max-width:599px)": {
-                minWidth: "100%",
-              },
-            }}
-          >
-            <Card className="card-common">
-              <Typography className="cardTitle">Closed</Typography>
-              <Typography className="card-text">
-                {projectStats.closed}
-              </Typography>
-            </Card>
-          </Grid>
-          <Grid
-            item
-            xs={12}
-            md={2.4}
-            sx={{
-              "@media (max-width:599px)": {
-                minWidth: "100%",
-              },
-            }}
-          >
-            <Card className="card-common">
-              <Typography className="cardTitle">Running</Typography>
-              <Typography className="card-text">
-                {projectStats.running}
-              </Typography>
-            </Card>
-          </Grid>
-          <Grid
-            item
-            xs={12}
-            md={2.4}
-            sx={{
-              "@media (max-width:599px)": {
-                minWidth: "100%",
-              },
-            }}
-          >
-            <Card className="card-common">
-              <Typography className="cardTitle">Closure Delay</Typography>
-              <Typography className="card-text">
-                {projectStats.delayed}
-              </Typography>
-            </Card>
-          </Grid>
-          <Grid
-            item
-            xs={12}
-            md={2.4}
-            sx={{
-              "@media (max-width:599px)": {
-                minWidth: "100%",
-              },
-            }}
-          >
-            <Card className="card-common">
-              <Typography className="cardTitle">Cancelled</Typography>
-              <Typography className="card-text">
-                {projectStats.cancelled}
-              </Typography>
-            </Card>
-          </Grid>
-          <Grid item xs={12} md={12}>
-            <Box>
-              <BarGraph data={barGraph} />
-            </Box>
-          </Grid>
-        </Grid>
+        </Box>
       </Box>
-    </>
+    </Box>
   );
 };
 

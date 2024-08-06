@@ -31,7 +31,7 @@ const validationSchema = Yup.object().shape({
 });
 
 const CustomTextField = ({ label, ...props }) => (
-  <Box sx={{ marginTop: "15px" }}>
+  <Box sx={{ marginTop: "20px" }}>
     <Typography
       component="label"
       variant="body2"
@@ -127,7 +127,7 @@ const Login = () => {
                 component="h1"
                 variant="h6"
                 color={"#555"}
-                mb={2}
+                mb={3}
                 mt={2}
               >
                 Login to get started
@@ -202,7 +202,7 @@ const Login = () => {
                       type="submit"
                       variant="contained"
                       sx={{
-                        mb: 1,
+                        mb: 2,
                         mt: 2.1,
                         borderRadius: "50px",
                         textTransform: "capitalize",
@@ -213,7 +213,7 @@ const Login = () => {
                       Login
                     </Button>
                   </Grid>
-                  <Grid item textAlign={"center"}>
+                  {/* <Grid item textAlign={"center"}>
                     <Link
                       to="/register"
                       variant="body2"
@@ -225,7 +225,7 @@ const Login = () => {
                     >
                       {"Don't have an account? Sign Up"}
                     </Link>
-                  </Grid>
+                  </Grid> */}
                 </Form>
               )}
             </Formik>

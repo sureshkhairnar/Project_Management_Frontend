@@ -31,7 +31,7 @@ const ProtectedRoute = ({ children }) => {
 
   const token = sessionStorage.getItem("access");
 
-  return loggedUSer._id || token ? children : <Navigate to="/login" />;
+  return loggedUSer._id || token ? children : <Navigate to="/" />;
 };
 
 function App() {

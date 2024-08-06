@@ -5,13 +5,78 @@ import {
   Bar,
   XAxis,
   YAxis,
-  CartesianGrid,
   Tooltip,
   Legend,
   ResponsiveContainer,
+  LabelList,
 } from "recharts";
 
+const getYAxisDomain = (data, margin = 5) => {
+  const maxValue = Math.max(
+    ...data.map((item) => Math.max(item.Total, item.Close))
+  );
+  return [0, Math.ceil(maxValue + margin)];
+};
+
+const CustomBar = (props) => {
+  const { x, y, width, height, fill } = props;
+  const barRadius = 5;
+
+  return (
+    <g>
+      <rect
+        x={x}
+        y={y}
+        width={width}
+        height={height}
+        fill={fill}
+        rx={barRadius}
+        ry={barRadius}
+      />
+    </g>
+  );
+};
+
+const CustomLegend = (props) => {
+  const { payload } = props;
+  return (
+    <div
+      style={{
+        marginTop: 20,
+        display: "flex",
+        flexDirection: "row",
+        flexWrap: "wrap",
+        justifyContent: "center",
+      }}
+    >
+      {payload.map((entry, index) => (
+        <div
+          key={`item-${index}`}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            marginRight: 40,
+          }}
+        >
+          <div
+            style={{
+              width: 12,
+              height: 12,
+              borderRadius: "50%",
+              backgroundColor: entry.color,
+              marginRight: 10,
+            }}
+          />
+          <span>{entry.value}</span>
+        </div>
+      ))}
+    </div>
+  );
+};
+
 const BarGraph = ({ data }) => {
+  const yAxisDomain = getYAxisDomain(data, 1);
+
   return (
     <>
       <Typography
@@ -28,6 +93,7 @@ const BarGraph = ({ data }) => {
           width: "100%",
           maxWidth: "100%",
           marginTop: "8px",
+          paddingTop: "30px",
           boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
           borderRadius: "8px",
           overflow: "hidden",
@@ -49,15 +115,42 @@ const BarGraph = ({ data }) => {
           },
         }}
       >
-        <ResponsiveContainer width="100%" height={280}>
+        <ResponsiveContainer width="100%" height={350}>
           <BarChart data={data}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" />
-            <YAxis />
+            <XAxis
+              dataKey="name"
+              tickLine={false}
+              style={{ color: "black", fontWeight: "bold" }}
+            />
+            <YAxis tickLine={false} domain={yAxisDomain} />
             <Tooltip />
-            <Legend />
-            <Bar dataKey="Total" fill="#8884d8" background={{ fill: "#eee" }} />
-            <Bar dataKey="Close" fill="#82ca9d" />
+            <Legend content={<CustomLegend />} />
+            <Bar
+              dataKey="Total"
+              fill="#0345fc"
+              barSize={15}
+              shape={<CustomBar />}
+            >
+              <LabelList
+                dataKey="Total"
+                position="top"
+                style={{ fontSize: "14px", fill: "#000" }}
+                offset={10}
+              />
+            </Bar>
+            <Bar
+              dataKey="Close"
+              fill="#05ab42"
+              barSize={15}
+              shape={<CustomBar />}
+            >
+              <LabelList
+                dataKey="Close"
+                position="top"
+                style={{ fontSize: "14px", fill: "#000" }}
+                offset={10}
+              />
+            </Bar>
           </BarChart>
         </ResponsiveContainer>
       </Paper>

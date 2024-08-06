@@ -12,7 +12,7 @@ const authSlice = createSlice({
     },
 
     removeUser: () => {
-      return { _id: "", role: "" };
+      return { _id: "", email: "" };
     },
 
     addProject: (state, action) => {

@@ -12,7 +12,6 @@ class ProjectService {
   static fetchOneProject(id) {
     return API.get(endpoints.api.project.getone + id);
   }
-
   static projectStatistic() {
     return API.get(endpoints.api.project.projectStatistic);
   }

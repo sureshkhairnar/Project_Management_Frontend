@@ -15,16 +15,19 @@ import { format } from "date-fns";
 import "../dashboard/Dashboard.css";
 import Logo from "../../../assets/Logo.svg";
 import backIcon from "../../../assets/back arrow.svg";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const ProjectList = () => {
   const [projects, setProjects] = useState([]);
-  const [key, setKey] = useState("");
-  const [sortColumn, setSortColumn] = useState("");
+  // const [key, setKey] = useState("");
+  // const [sortColumn, setSortColumn] = useState("");
+  const navigate = useNavigate();
 
-  const handleChange = (e) => {
-    const { value } = e.target;
-    setKey(value);
-  };
+  // const handleChange = (e) => {
+  //   const { value } = e.target;
+  //   setKey(value);
+  // };
 
   const loadProject = () => {
     ProjectService.fetchAllProject()
@@ -38,37 +41,30 @@ const ProjectList = () => {
   };
 
   useEffect(() => {
-    if (key) {
-      let timeout = setTimeout(() => {
-        ProjectService.getProjectAll(key)
-          .then((response) => {
-            setProjects(response.data.data);
-            console.log("Filtered projects", response.data.data);
-          })
-          .catch((err) => {
-            console.error(err);
-          });
-      }, 1200);
-      return () => clearTimeout(timeout);
-    } else {
-      loadProject();
-    }
-  }, [key]);
+    loadProject();
+  }, []);
 
-  useEffect(() => {
-    if (sortColumn) {
-      const sortedProjects = [...projects].sort((a, b) => {
-        if (a[sortColumn] < b[sortColumn]) return -1;
-        if (a[sortColumn] > b[sortColumn]) return 1;
-        return 0;
-      });
-      setProjects(sortedProjects);
-    }
-  }, [sortColumn]);
+  // useEffect(() => {
+  //   if (sortColumn) {
+  //     const sortedProjects = [...projects].sort((a, b) => {
+  //       if (a[sortColumn] < b[sortColumn]) return -1;
+  //       if (a[sortColumn] > b[sortColumn]) return 1;
+  //       return 0;
+  //     });
+  //     setProjects(sortedProjects);
+  //   }
+  // }, [sortColumn]);
 
   const changeStatus = (id, status) => {
     ProjectService.updateProject(id, { status })
       .then((response) => {
+        if (response) {
+          Swal.fire({
+            icon: "success",
+            title: "Success",
+            text: "Project status changed successfully",
+          });
+        }
         setProjects((prevProjects) =>
           prevProjects.map((project) =>
             project._id === id ? { ...project, status } : project
@@ -474,14 +470,18 @@ const ProjectList = () => {
           <img
             src={backIcon}
             alt="back icon"
-            style={{ marginTop: "-5px", marginLeft: "10px" }}
+            style={{ marginTop: "-5px", marginLeft: "10px", cursor: "pointer" }}
+            onClick={() => navigate(-1)}
           />
           <Typography variant="h6" className="dashboard-title">
             Project Listing
           </Typography>
         </Box>
         <Box
-          sx={{ display: "flex", justifyContent: "center" }}
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+          }}
           mt={"-60px"}
           mb={"28px"}
         >
