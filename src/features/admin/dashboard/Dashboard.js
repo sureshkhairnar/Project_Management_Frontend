@@ -7,6 +7,7 @@ import BarGraph from "./BarGraph";
 import { Typography } from "@mui/material";
 import "./Dashboard.css";
 import Logo from "../../../assets/Logo.svg";
+import { ToastContainer } from "react-toastify";
 
 const Dashboard = () => {
   const [barGraph, setBarGraph] = useState([]);
@@ -90,6 +91,7 @@ const Dashboard = () => {
         <Typography variant="h6" className="dashboard-title">
           Dashboard
         </Typography>
+        <ToastContainer />
         <Box sx={{ display: "flex", justifyContent: "center" }} mt={"-60px"}>
           <img
             src={Logo}
@@ -101,7 +103,7 @@ const Dashboard = () => {
         <Box>
           <Grid
             container
-            mt={1}
+            mt={2}
             spacing={2}
             sx={{
               flexDirection: { xs: "column", md: "row" },

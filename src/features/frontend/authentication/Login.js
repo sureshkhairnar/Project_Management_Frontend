@@ -18,6 +18,8 @@ import { useDispatch } from "react-redux";
 import Swal from "sweetalert2";
 import logo from "../../../assets/Logo.svg";
 import passwordHideIcon from "../../../assets/hide-password.svg";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const theme = createTheme();
 
@@ -74,11 +76,14 @@ const Login = () => {
     AuthService.userLogin(values)
       .then((response) => {
         const message = response?.data?.message || "Logged In Successfully";
-        Swal.fire({
-          icon: "success",
-          title: "Success",
-          text: message,
-        });
+        // Swal.fire({
+        //   icon: "success",
+        //   title: "Success",
+        //   text: message,
+        //   timer: 500,
+        // });
+        // alert("Successfully logged in");
+        toast.success(message);
         dispatch(addUser(response.data.data));
         navigate("/secured");
       })

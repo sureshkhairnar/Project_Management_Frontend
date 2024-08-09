@@ -61,7 +61,13 @@ const Sidebar = () => {
   }, [isMobile]);
 
   return (
-    <Box sx={{ display: "flex", minHeight: "100vh", backgroundColor: "#eee" }}>
+    <Box
+      sx={{
+        display: "flex",
+        minHeight: "100vh",
+        backgroundColor: "#eee",
+      }}
+    >
       <CssBaseline />
       <Drawer variant="permanent" open={open}>
         <SidebarMenu open={open} />
@@ -69,17 +75,20 @@ const Sidebar = () => {
       <Box
         component="main"
         sx={{
+          maxHeight: "21vh",
+          backgroundColor: "#eee",
           flexGrow: 1,
-          width: `calc(100% - ${drawerWidth}px)`,
           p: 0,
           backgroundImage: `url(${headerBg})`,
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
         }}
-        maxHeight={"21vh"}
       >
-        <Box p={2} mt={1}>
-          <SidebarRoutes />
+        <Box />
+        <Box>
+          <Box p={2} mt={1}>
+            <SidebarRoutes />
+          </Box>
         </Box>
       </Box>
     </Box>
